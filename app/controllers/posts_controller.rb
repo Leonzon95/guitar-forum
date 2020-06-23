@@ -42,11 +42,12 @@ class PostsController < ApplicationController
     end
 
     get '/posts/:id/edit' do
+        post = Post.find_by_id(params[:id])
         if !logged_in? 
             @error = "Please log in"
             erb :'/users/login'
-        elsif current_user.id == params[:id]
-            @post = Post.find_by_id(params[:id])
+        elsif current_user == post.user
+            @post = post
             erb :'/posts/edit'
         else
             redirect '/posts'
