@@ -1,0 +1,10 @@
+<h2> Welcome, <%= @user.username %></h2>
+
+<a href="/posts/new">New Post</a>
+<p>
+    <ul>
+        <% Post.all.each do |post| %>
+            <li><a href="/posts/<%=post.id%>"> <h3><%= post.title %></h3></a> by <%=post.user.username%></li>
+        <% end %>
+    </ul>
+</p>
