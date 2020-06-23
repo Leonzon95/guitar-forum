@@ -1,10 +1,12 @@
-<h2> <%= @post.title %> </h2>
-
+<h2> <%= @post.title %> </h2> by <%= @user.username %><br>
+<br>
 <p><%= @post.content %></p>
-<a href="/posts/<%=@post.id%>/edit">Edit</a>
+<% if @user == current_user%>
+    <a href="/posts/<%=@post.id%>/edit">Edit</a>
 
-<form method="POST" action="/posts/<%=@post.id%>">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="submit" value="Delete">
-</form>
+    <form method="POST" action="/posts/<%=@post.id%>">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Delete">
+    </form>
+<%end%>
 
