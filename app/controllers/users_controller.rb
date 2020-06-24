@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
     get '/signup' do 
-        erb :'users/signup'
+        if logged_in?
+            @user = current_user
+            erb :'/posts/index'
+        else
+            erb :'users/signup'
+        end
     end
 
     post '/users' do 
@@ -15,8 +20,31 @@ class UsersController < ApplicationController
         end
     end
 
+    get '/users/:id' do 
+        if logged_in?
+            @user = User.find_by_id(params[:id])
+            erb :'/users/show'
+        else
+            erb :'/users/login'
+        end
+    end
+
     get '/login' do 
-        erb :'/users/login'
+        if logged_in?
+            @user = current_user
+            erb :'/posts/show'
+        else
+            erb :'/users/login'
+        end
+    end
+
+    get '/logout' do
+        if logged_in?
+            session.clear
+            redirect '/'
+        else
+            redirect '/login'
+        end
     end
 
     post '/login' do 
@@ -29,5 +57,10 @@ class UsersController < ApplicationController
             @error = "invalid username or password"
             erb :'/users/login'
         end
+    end
+
+    post '/logout' do 
+        session.clear
+        redirect '/'
     end
 end

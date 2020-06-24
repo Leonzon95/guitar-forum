@@ -1,12 +1,41 @@
-<h2> <%= @post.title %> </h2> by <%= @user.username %><br>
+<header class="topnav">
+    <div class="current__user">Logged in as @<%=current_user.username%></div>
+    <a href="/logout" method="POST">Log Out</a>
+    <a href="/users/<%=current_user.id%>">Profile</a>
+    <a href="/posts">Home</a>
+</header>
+<h2> <%= @post.title %> </h2> by <a href="/users/<%=@user.id%>"><%= @user.username %></a><br>
 <br>
 <p><%= @post.content %></p>
 <% if @user == current_user%>
-    <a href="/posts/<%=@post.id%>/edit">Edit</a>
+    <form method="GET" action="/posts/<%=@post.id%>/edit">
+        <input type="submit" value="Edit">
+    </form>
 
     <form method="POST" action="/posts/<%=@post.id%>">
         <input type="hidden" name="_method" value="DELETE">
         <input type="submit" value="Delete">
     </form>
 <%end%>
-
+<ul>
+    <p>
+    <% @post.replies.each do |reply| %>
+        <li><%= reply.content %><br>
+        by <a href="/users/<%=reply.user.id%>"><%=reply.user.username%> <a></li>
+        <% if current_user == reply.user %>
+            <form type="GET" action="/posts/<%=@post.id%>/replies/<%=reply.id%>/edit">
+                <input type="submit" value="Edit">
+            </form>
+            <form method="POST" action="/replies/<%=reply.id%>">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="submit" value="Delete">
+            </form>
+        <% end %><br>
+    <%end%>
+    </p>
+</li>
+<p>
+    <form method="GET" action="/posts/<%=@post.id%>/replies/new">
+        <input type="submit" value="Reply">
+    </form>
+</p>

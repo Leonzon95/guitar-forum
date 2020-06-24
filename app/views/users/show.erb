@@ -1,0 +1,15 @@
+<header class="topnav">
+    <div class="current__user">Logged in as @<%=current_user.username%></div>
+    <a href="/logout" method="POST">Log Out</a>
+    <% if current_user == @user%>
+        <a class="active" href="/users/<%=current_user.id%>">Profile</a>
+    <% else %>
+        <a href="/users/<%=current_user.id%>">Profile</a>
+    <% end %>
+    <a href="/posts">Home</a>
+</header>
+
+<h2>@<%=@user.username%>'s Posts</h2>
+<% @user.posts.each do |post| %>
+    <li class="post__link"><a href="/posts/<%=post.id%>"> <h3><%= post.title %></h3></a></li>
+<% end %>

@@ -1,0 +1,11 @@
+<header class="topnav">
+    <div class="current__user">Logged in as @<%=current_user.username%></div>
+    <a href="/logout" method="POST">Log Out</a>
+    <a href="/users/<%=current_user.id%>">Profile</a>
+    <a href="/posts">Home</a>
+</header>
+<h4>Write a Reply:</h3>
+<form method="POST" action="/posts/<%=@post.id%>/replies" id="new_reply">
+    <textarea type="text" form="new_reply" name="reply[content]" rows="7" cols="60"></textarea><br>
+    <input type="submit" value="Reply">
+</form>

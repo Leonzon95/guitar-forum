@@ -21,7 +21,8 @@ class PostsController < ApplicationController
     post '/posts' do 
         user = current_user
         user.posts.create(params[:post])
-        redirect '/posts'
+        post = user.posts.last
+        redirect "/posts/#{post.id}"
     end
 
     get '/posts/:id' do 
@@ -37,6 +38,9 @@ class PostsController < ApplicationController
 
     delete '/posts/:id' do 
         post = Post.find_by_id(params[:id])
+        post.replies.each do |reply|
+            reply.destroy
+        end
         post.destroy
         redirect '/posts'
     end
