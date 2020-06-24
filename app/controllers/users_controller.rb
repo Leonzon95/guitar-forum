@@ -9,7 +9,6 @@ class UsersController < ApplicationController
     end
 
     post '/users' do
-        
         if !params[:user][:username].include?(" ")
             user = User.new(params[:user])
             if user.save
@@ -23,18 +22,18 @@ class UsersController < ApplicationController
     end
 
     get '/users/:id' do 
-        if logged_in?
-            @user = User.find_by_id(params[:id])
+        user = User.find_by_id(params[:id])
+        if logged_in? && user
+            @user = user
             erb :'/users/show'
         else
-            erb :'/users/login'
+            redirect '/login'
         end
     end
 
     get '/login' do 
         if logged_in?
-            @user = current_user
-            erb :'/posts/show'
+            redirect '/posts'
         else
             erb :'/users/login'
         end

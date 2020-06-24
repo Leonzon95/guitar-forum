@@ -31,19 +31,18 @@ class PostsController < ApplicationController
     end
 
     get '/posts/:id' do 
-        if logged_in?
-            @post = Post.find_by_id(params[:id])
-            @user = @post.user
+        post = Post.find_by_id(params[:id])
+        if logged_in? && post
+            @post = post
             erb :'posts/show'
         else
-            @error = "Please log in"
-            erb :'/users/login'
+            redirect '/login'
         end
     end
 
     delete '/posts/:id' do
         post = Post.find_by_id(params[:id])
-        if post.user == current_user
+        if post && post.user == current_user
             post.replies.each do |reply|
                 reply.destroy
             end
@@ -59,7 +58,7 @@ class PostsController < ApplicationController
         if !logged_in? 
             @error = "Please log in"
             erb :'/users/login'
-        elsif current_user == post.user
+        elsif post && current_user == post.user 
             @post = post
             erb :'/posts/edit'
         else
@@ -69,11 +68,13 @@ class PostsController < ApplicationController
 
     patch '/posts/:id' do 
         post = Post.find_by_id(params[:id])
-        if post.user == current_user
+        if post && post.user == current_user
             post.update(params[:post])
             redirect "/posts/#{post.id}"
-        else
+        elsif post
             redirect "/posts/#{post.id}"
+        else
+            redirect '/posts'
         end
     end
 end

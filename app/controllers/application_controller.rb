@@ -7,6 +7,7 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
     enable :sessions
     set :session_secret, ENV['SESSION_SECRET']
+    set :show_exceptions, true
   end
 
   get "/" do
@@ -19,6 +20,10 @@ class ApplicationController < Sinatra::Base
 
   not_found do
     erb :not_found
+  end
+
+  error ActiveRecord::RecordNotFound do
+    redirect '/posts'
   end
 
   helpers do 
