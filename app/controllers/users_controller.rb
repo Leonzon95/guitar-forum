@@ -8,16 +8,18 @@ class UsersController < ApplicationController
         end
     end
 
-    post '/users' do 
-        user = User.new(params[:user])
-        if user.save
-            session[:user_id] = user.id
-            @user = user
-            redirect '/posts'
-        else
-            @error = "username or password are invalid"
-            erb :'/users/signup'
-        end
+    post '/users' do
+        
+        if !params[:user][:username].include?(" ")
+            user = User.new(params[:user])
+            if user.save
+                session[:user_id] = user.id
+                @user = user
+                redirect '/posts'
+            end
+        end     
+        @error = "username or password are invalid"
+        erb :'/users/signup'
     end
 
     get '/users/:id' do 
