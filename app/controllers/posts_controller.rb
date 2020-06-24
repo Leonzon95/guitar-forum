@@ -20,9 +20,14 @@ class PostsController < ApplicationController
 
     post '/posts' do 
         user = current_user
-        user.posts.create(params[:post])
-        post = user.posts.last
-        redirect "/posts/#{post.id}"
+        if !params[:post][:title].empty?
+            user.posts.create(params[:post])    
+            post = user.posts.last
+            redirect "/posts/#{post.id}"
+        else
+            @error = "Your title can't be empty"
+            erb :'/posts/new'
+        end
     end
 
     get '/posts/:id' do 
@@ -36,13 +41,17 @@ class PostsController < ApplicationController
         end
     end
 
-    delete '/posts/:id' do 
+    delete '/posts/:id' do
         post = Post.find_by_id(params[:id])
-        post.replies.each do |reply|
-            reply.destroy
+        if post.user == current_user
+            post.replies.each do |reply|
+                reply.destroy
+            end
+            post.destroy
+            redirect '/posts'
+        else
+            redirect '/posts'
         end
-        post.destroy
-        redirect '/posts'
     end
 
     get '/posts/:id/edit' do
@@ -60,7 +69,11 @@ class PostsController < ApplicationController
 
     patch '/posts/:id' do 
         post = Post.find_by_id(params[:id])
-        post.update(params[:post])
-        redirect "/posts/#{post.id}"
+        if post.user == current_user
+            post.update(params[:post])
+            redirect "/posts/#{post.id}"
+        else
+            redirect "/posts/#{post.id}"
+        end
     end
 end

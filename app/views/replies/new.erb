@@ -5,6 +5,7 @@
     <a href="/posts">Home</a>
 </header>
 <h4>Write a Reply:</h3>
+<%=@error%>
 <form method="POST" action="/posts/<%=@post.id%>/replies" id="new_reply">
     <textarea type="text" form="new_reply" name="reply[content]" rows="7" cols="60"></textarea><br>
     <input type="submit" value="Reply">

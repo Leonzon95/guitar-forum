@@ -5,7 +5,7 @@
     <a href="/posts">Home</a>
 </header>
 <h2>Create a post</h2>
-
+<%=@error%>
 <form method="POST" action="/posts" id="post">
     <label for="title">Title: </title><br>
     <input type="text" id="title" name="post[title]" cols="7"><br>
