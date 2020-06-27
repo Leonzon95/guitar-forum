@@ -4,38 +4,44 @@
     <a href="/users/<%=current_user.id%>">Profile</a>
     <a href="/posts">Home</a>
 </header>
-<h2> <%= @post.title %> </h2> by <a href="/users/<%=@post.user.id%>"><%= @post.user.username %></a><br>
-<br>
-<p><%= @post.content %></p>
+<div class="block">
+<h2> <%= @post.title %> </h2> by @<a class="links" href="/users/<%=@post.user.id%>"><%= @post.user.username %></a> <%= @post.created_at.strftime("%b %d, %Y") %><br>
+</div>
+<%= @post.content %><br><br>
 <% if @post.user == current_user%>
-    <form method="GET" action="/posts/<%=@post.id%>/edit">
-        <input type="submit" value="Edit">
+    <form class="show__button" method="GET" action="/posts/<%=@post.id%>/edit">
+        <input class="show__button" type="submit" value="Edit">
     </form>
 
-    <form method="POST" action="/posts/<%=@post.id%>">
+    <form class="show__button" method="POST" action="/posts/<%=@post.id%>">
         <input type="hidden" name="_method" value="DELETE">
-        <input type="submit" value="Delete">
+        <input  id="delete"class="show__button" type="submit" value="Delete">
     </form>
+    <br><br>
 <%end%>
-<ul>
-    <p>
+
+<hr class="line">
+<ul>    
     <% @post.replies.each do |reply| %>
-        <li><%= reply.content %><br>
-        by <a href="/users/<%=reply.user.id%>"><%=reply.user.username%> <a></li>
+        <li class="reply__block"><%= reply.content %><br>
+        by @<a href="/users/<%=reply.user.id%>" class="links"><%=reply.user.username%></a> | <%= reply.created_at.strftime("%b %d, %Y") %></li>
         <% if current_user == reply.user %>
-            <form type="GET" action="/posts/<%=@post.id%>/replies/<%=reply.id%>/edit">
-                <input type="submit" value="Edit">
+            <form class="show__button" type="GET" action="/posts/<%=@post.id%>/replies/<%=reply.id%>/edit">
+                <input class="show__button" type="submit" value="Edit" class="edit__delete">
             </form>
-            <form method="POST" action="/replies/<%=reply.id%>">
+            <form class="show__button" method="POST" action="/replies/<%=reply.id%>">
                 <input type="hidden" name="_method" value="DELETE">
-                <input type="submit" value="Delete">
+                <input  id="delete" class="show__button" type="submit" value="Delete" class="edit__delete">
             </form>
-        <% end %><br>
+            <br><br>
+        <% end %>
+        </li>
+        <hr class="line">
     <%end%>
-    </p>
-</li>
+
+</ul>
 <p>
     <form method="GET" action="/posts/<%=@post.id%>/replies/new">
-        <input type="submit" value="Reply">
+        <input class="show__button" type="submit" value="Reply">
     </form>
 </p>

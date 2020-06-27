@@ -4,10 +4,10 @@
     <a href="/users/<%=current_user.id%>">Profile</a>
     <a href="/posts">Home</a>
 </header>
-<form method="POST" action="/posts/<%=@post.id%>" id="edit">
+<br><form method="POST" action="/posts/<%=@post.id%>" id="edit">
     <input type="hidden" name="_method" value="PATCH">
     Title: <br>
-    <input type="text" name="post[title]" value="<%=@post.title%>"><br>
+    <input type="text" name="post[title]" value="<%=@post.title%>" class="title__bar"><br>
     <br><textarea type="tetx" form="edit" name=post[content] rows="7" cols="60" ><%=@post.content%></textarea> 
-    <br><input type="submit" value="Edit">
+    <br><input class="show__button" type="submit" value="Submit">
 </form>

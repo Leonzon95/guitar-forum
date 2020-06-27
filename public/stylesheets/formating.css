@@ -1,0 +1,50 @@
+.title__bar{
+    width: 400px;
+    height: 20px;
+}
+
+.links{
+    color: black !important;
+}
+.show__button{
+    display:inline-block;
+    width: 75px;
+    text-align: center;
+    text-align: center;
+    
+    /* background-color: black;
+    color: white ; */
+}
+.show__button:hover {
+    background-color: black;
+    color: white;
+  }
+
+#delete:hover{
+    background-color: black;
+    color: red;
+}
+
+#index__button{
+    float: right; 
+}
+
+.block {
+    font-size: 12px;
+    display: block;
+    margin-bottom:20px;
+    margin-top: 20px;
+}
+.line {
+    height:2px;
+    border-width:0;
+    color:lightgray;
+    background-color:lightgray
+}
+
+.reply__block {
+    font-size: 15px;
+    display: block;
+    margin-bottom:20px;
+    margin-top: 20px;
+}

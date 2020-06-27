@@ -13,7 +13,13 @@
 
   /* --- Welcome Page Styles --- */
   body {
-    background-color: lightblue;
+    background-color: lightskyblue;
+    background: url('../images/background-img.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /* background-color: lightskyblue; */
     color: #333;
     font-family: Sans-Serif;
     line-height: 18px;
@@ -113,5 +119,6 @@
     line-height: 24px;
   }
 
+  
 
 }

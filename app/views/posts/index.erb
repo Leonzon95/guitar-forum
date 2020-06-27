@@ -5,12 +5,19 @@
     <a class="active" href="/posts">Home</a>
 </header>
 <h2>Posts</h2> 
+<form action="/posts/new" method="GET" id="index__button">
+    <input type="submit" value="New Post" class="show__button" id="index__button">
+</form>
 
-<a href="/posts/new">New Post</a>
 <p>
     <ul>
-        <% Post.all.each do |post| %>
-            <li class="post__link"><a href="/posts/<%=post.id%>"> <h3><%= post.title %></h3></a> by <a href="/users/<%=post.user.id%>"><%=post.user.username%></a></li>
+        <% @posts.all.each do |post| %> 
+            
+            <li class="post__link"><div class="block"> <a href="/posts/<%=post.id%>" class="links"> <h3 ><%= post.title %></h3></a> by @<a class="links" href="/users/<%=post.user.id%>"><%=post.user.username%></a>
+            | <%= post.created_at.strftime("%b %d, %Y") %></div></li>
+            <% if post != @posts.all.last %>
+                <hr class="line">
+            <% end %>
         <% end %>
     </ul>
 </p>

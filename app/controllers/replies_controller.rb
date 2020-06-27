@@ -1,14 +1,12 @@
 class RepliesController < ApplicationController
     get '/posts/:post_id/replies/new' do 
         post = Post.find_by_id(params[:post_id])
-        if logged_in? && post
+        log_in_required
+        if post
             @post = post
             erb :'/replies/new'
-        elsif logged_in?
-            redirect '/posts'
         else
-            @error = "Please log in"
-            erb :'/users/login'
+            redirect '/posts'
         end
     end
 
@@ -30,40 +28,44 @@ class RepliesController < ApplicationController
 
     get '/posts/:post_id/replies/:id/edit' do 
         reply = Reply.find_by_id(params[:id])
-        if logged_in? && reply
+        log_in_required
+        if reply
             @reply = reply
             erb :'/replies/edit'
-        elsif logged_in?
-            redirect '/posts'
         else
-            @error = "Please log in"
-            erb :'/users/login'
+            redirect '/posts'
         end
     end
 
     delete '/replies/:id' do 
+        authorization_required
         reply = Reply.find_by_id(params[:id])
-        if reply && reply.user == current_user
+        if reply
             post_id = reply.post.id
             reply.destroy
             redirect "/posts/#{post_id}"
-        elsif reply
-            redirect "/posts/#{reply.post.id}"
         else
             redirect "/posts"
         end
     end
 
     patch '/replies/:id' do
+        authorization_required
         reply = Reply.find_by_id(params[:id])
-        if reply && reply.user == current_user
+        if reply
             post_id = reply.post.id
             reply.update(params[:reply])
             redirect "/posts/#{post_id}"
-        elsif reply
-            redirect "/posts/#{reply.post.id}" 
         else
             redirect '/posts'
+        end
+    end
+
+    helpers do
+        def authorization_required
+            unless @reply = current_user.replies.find_by_id(params[:id])
+                redirect "/posts"
+            end
         end
     end
 end

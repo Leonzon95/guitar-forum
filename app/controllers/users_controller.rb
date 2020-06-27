@@ -8,12 +8,11 @@ class UsersController < ApplicationController
         end
     end
 
-    post '/users' do
+    post '/signup' do 
         if !params[:user][:username].include?(" ")
             user = User.new(params[:user])
             if user.save
                 session[:user_id] = user.id
-                @user = user
                 redirect '/posts'
             end
         end     
@@ -40,28 +39,19 @@ class UsersController < ApplicationController
     end
 
     get '/logout' do
-        if logged_in?
-            session.clear
-            redirect '/'
-        else
-            redirect '/login'
-        end
+        log_in_required
+        session.clear
+        redirect '/'
     end
 
     post '/login' do 
         user = User.find_by(username: params[:user][:username])
         if user && user.authenticate(params[:user][:password])
             session[:user_id] = user.id
-            @user = user
             redirect '/posts'
         else
             @error = "invalid username or password"
             erb :'/users/login'
         end
-    end
-
-    post '/logout' do 
-        session.clear
-        redirect '/'
     end
 end
