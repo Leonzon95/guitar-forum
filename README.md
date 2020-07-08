@@ -50,9 +50,12 @@ shotgun
 * [ActiveRecord](https://github.com/rails/rails/tree/master/activerecord)- Database management
 * [Corneal](https://github.com/thebrianemory/corneal) - Created file template with gemfile
 
+## Contributing
+
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the [MIT](https://opensource.org/licenses/MIT) License 
 
 
