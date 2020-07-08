@@ -4,10 +4,7 @@
     <a href="/users/<%=current_user.id%>">Profile</a>
     <a href="/posts">Home</a>
 </header>
-<h2>Edit Your Reply</h2>
-<form method="POST" action="/logout">
-    <input type="submit" class="logout__button" value="Log Out">
-</form>
+<h2>Edit Your Reply</h2><br>
 <form method="POST" action="/replies/<%=@reply.id%>" id="edit_reply">
     <input type="hidden" name="_method" value="PATCH">
     <textarea type="text" form="edit_reply" name="reply[content]" rows="7" cols="60"><%=@reply.content%></textarea><br>

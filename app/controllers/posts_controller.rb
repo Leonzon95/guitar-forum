@@ -54,18 +54,19 @@ class PostsController < ApplicationController
         redirect '/posts'
     end
 
-    # get '/posts/:id/edit' do
-    #     post = Post.find_by_id(params[:id])
-    #     if !logged_in? 
-    #         @error = "Please log in"
-    #         erb :'/users/login'
-    #     elsif post && current_user == post.user 
-    #         @post = post
-    #         erb :'/posts/edit'
-    #     else
-    #         redirect '/posts'
-    #     end
-    # end
+    get '/posts/:id/edit' do
+        post = Post.find_by_id(params[:id])
+        if !logged_in? 
+            @error = "Please log in"
+            erb :'/users/login'
+        elsif post && current_user == post.user 
+            @post = post
+            erb :'/posts/edit'
+        else
+            redirect '/posts'
+        end
+    end
+    
     get '/posts/:id/edit' do
         log_in_required
         authorization_required
